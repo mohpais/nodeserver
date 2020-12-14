@@ -1,13 +1,14 @@
 const conn = require('../database/index');
 const { emptyArray } = require('../helpers/validations');
 const { status, errorMessage, successMessage } = require('../helpers/status');
-const { hashingPassword, encrypt } = require('../helpers/security')
+const { hashingPassword, hashingPasswordwithGlobal } = require('../helpers/security')
 // const moment = require('moment');
 
 module.exports = {
     creacteUser: async (req, res) => {
         const { role, email, username, password } = req.body
-        const hash = await hashingPassword(password)
+        // const hash = await hashingPassword(password)
+        const hash = hashingPasswordwithGlobal(email, password)
         // const created_on = moment(new Date())
         // console.log(hash);
         const created_on = new Date()

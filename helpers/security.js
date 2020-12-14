@@ -13,10 +13,12 @@ const bcrypt = require('bcrypt');
 const encrypt = (data) => {
     const log = JSON.stringify(data)
     return security.enc(log, 1, 6)
+    // return security.enc(log, 2, 6)
 };
 
 const decrypt = (data) => {
     return security.dec(data, 1, 6)
+    // return security.dec(data, 2, 6)
 };
 
 const hashingPassword = async(password) => {
@@ -30,8 +32,18 @@ const hashingPassword = async(password) => {
     }
 }
 
+const hashingPasswordwithGlobal = (email, password) => {
+    try {
+        const log = JSON.stringify({email, password})
+        return security.enc(log, 2, 6)
+    } catch (error) {
+        return error
+    }
+}
+
 module.exports = {
     encrypt,
     decrypt,
-    hashingPassword
+    hashingPassword,
+    hashingPasswordwithGlobal
 }
