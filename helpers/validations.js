@@ -1,3 +1,4 @@
+
 /**
    * isValidEmail helper method
    * @param {string} email
@@ -64,5 +65,5 @@ module.exports = {
     validatePassword,
     isEmpty,
     empty,
-    emptyArray
+    emptyArray,
 };

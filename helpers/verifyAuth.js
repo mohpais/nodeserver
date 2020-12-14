@@ -20,7 +20,7 @@ const verifyToken = async (req, res, next) => {
         return res.status(status.bad).send(errorMessage);
     }
     try {
-        const decoded =  jwt.verify(token, process.env.SECRET);
+        const decoded = jwt.verify(token, process.env.SECRET);
         req.user = {
             email: decoded.email,
             user_id: decoded.user_id,
@@ -34,5 +34,6 @@ const verifyToken = async (req, res, next) => {
         return res.status(status.unauthorized).send(errorMessage);
     }
 };
+
 
 export default verifyToken;

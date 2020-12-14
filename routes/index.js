@@ -1,5 +1,6 @@
 const express = require('express');
 const user = require('./user');
+const auth = require('./auth');
 const router = express.Router();
 
 /**
@@ -13,5 +14,10 @@ router.get('/', async(req, res) => {
  * This user routes
 */
 router.use('/user', user);
+
+/**
+ * This auth routes
+*/
+router.use('/auth', auth);
 
 module.exports = router

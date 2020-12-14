@@ -1,29 +1,32 @@
 const conn = require('../database/index');
 const { emptyArray } = require('../helpers/validations');
-const { status, errorMessage } = require('../helpers/status');
-const moment = require('moment');
+const { status, errorMessage, successMessage } = require('../helpers/status');
+const { hashingPassword, encrypt } = require('../helpers/security')
+// const moment = require('moment');
 
 module.exports = {
-    creacteUser: (req, res) => {
-        const { role, username, password } = req.body
+    creacteUser: async (req, res) => {
+        const { role, email, username, password } = req.body
+        const hash = await hashingPassword(password)
         // const created_on = moment(new Date())
-        // console.log(created_on);
+        // console.log(hash);
         const created_on = new Date()
         let queryfind = "SELECT * FROM users where username = ?"
         conn.query(queryfind, username, (err, result) => {
-            if (err) throw err;
+            if (err) throw res.status(status.error).send(err);
             if (emptyArray(result)) {
-                const data = [role, username, password, created_on]
+                const data = [role, email, username, hash, created_on]
                 // let queryinsert = "INSERT INTO `users`(`role`, `username`, `password`, `created_at`) VALUES ([value-1],[value-2],[value-3],[value-4]"
-                let queryinsert = "INSERT INTO `users`(`role`, `username`, `password`, `created_at`) VALUES (?, ?, ?, ?)";
+                let queryinsert = "INSERT INTO `users`(`role`, `email`, `username`, `password`, `created_at`) VALUES (?, ?, ?, ?, ?)";
                 conn.query(queryinsert, data, (err, result) => {
                     if (err) throw err;
-                    console.log(result);
+                    successMessage.message = `Successfully create user with id ${result.insertId}`
+                    res.status(status.success).send(successMessage)
                 })
             } else {
-                console.log('ada');
+                errorMessage.message = 'User is defined!'
+                res.status(status.error).send(errorMessage)
             }
-            return result
         })
     },
     findUser: (req, res) => {

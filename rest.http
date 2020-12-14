@@ -6,9 +6,10 @@ POST http://localhost:4000/v1/user/create HTTP/1.1
 content-type: application/json
 
 {
-    "role": "user",
-    "username": "ani",
-    "password": "123456"
+    "role": "admin",
+    "email": "mohamad.pais30@gmail.com",
+    "username": "mohpais",
+    "password": "gunadarma"
 }
 
 ###
@@ -17,4 +18,15 @@ content-type: application/json
 
 {
     "username": "anis"
+}
+
+# eyJlbWFpbCI6ImFuaSIsInBhc3N3b3JkIjoiZ3VuYWRhcm1hIn0
+# {"email":"ani","password":"gunadarma"}
+
+###
+POST http://localhost:4000/v1/auth/login HTTP/1.1
+content-type: application/json
+
+{
+    "params": "eyJlbWFpbCI6ImFuaSIsInBhc3N3b3JkIjoiZ3VuYWRhcm1hIn0"
 }
