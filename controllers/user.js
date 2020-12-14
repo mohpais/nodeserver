@@ -1,5 +1,6 @@
 const conn = require('../database/index');
 const { emptyArray } = require('../helpers/validations');
+const { status, errorMessage } = require('../helpers/status');
 const moment = require('moment');
 
 module.exports = {
@@ -21,6 +22,20 @@ module.exports = {
                 })
             } else {
                 console.log('ada');
+            }
+            return result
+        })
+    },
+    findUser: (req, res) => {
+        const { username } = req.body
+        let queryfind = "SELECT * FROM users where username = ?"
+        conn.query(queryfind, username, (err, result) => {
+            if (err) throw res.json(status.error).send(err);
+            if (emptyArray(result)) {
+                errorMessage.message = 'User not found!'
+                res.status(status.notfound).send(errorMessage)
+            } else {
+                res.status(status.success).send({data: result})
             }
             return result
         })
