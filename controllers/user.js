@@ -9,8 +9,6 @@ module.exports = {
         const { role, email, username, password } = req.body
         // const hash = await hashingPassword(password)
         const hash = hashingPasswordwithGlobal(email, password)
-        // const created_on = moment(new Date())
-        // console.log(hash);
         const created_on = new Date()
         let queryfind = "SELECT * FROM users where username = ?"
         conn.query(queryfind, username, (err, result) => {
